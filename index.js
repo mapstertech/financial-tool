@@ -89,18 +89,8 @@ const getTickerInfo = async () => {
             }
             return all_data;
         });
-        // Finished building balance sheet data
 
-        // Get company name
-        let company_name
-
-        try {
-            company_name = await page.evaluate(() => document.querySelector('.quote-name h2').innerText)
-        } catch(err) {
-            console.log(err.message);
-        }
-
-        // Get cash flow data
+        // Navigate to cash flow
         try {
             console.log('Clicking on cashflow');
             await page.hover(report_selectors.dropdown_menu);
@@ -110,6 +100,7 @@ const getTickerInfo = async () => {
             await browser.close();
         }
 
+        // Get cash flow data
         const cf_table_data = await page.evaluate(() => {
             const all_data = [];
             const rows = Array.from(document.querySelectorAll('.qmod-rowtitle'));
@@ -145,7 +136,6 @@ const getTickerInfo = async () => {
             }
             return all_data;
         });
-        // Done getting cash flow data
 
         // Navigate to income statement
         try {
@@ -193,7 +183,15 @@ const getTickerInfo = async () => {
             }
             return all_data;
         });
-        // Done getting cash flow data
+
+        // Get company name
+        let company_name;
+
+        try {
+            company_name = await page.evaluate(() => document.querySelector('.quote-name h2').innerText)
+        } catch(err) {
+            console.log(err.message);
+        }
 
         // Combine financial reports
         master_data.push({
