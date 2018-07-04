@@ -15,7 +15,7 @@ if (!process.argv[2]) {
 }
 
 const url = BASE_TMX_URL + '?qm_symbol=' + tickerSymbol;
-const report_selector = {
+const report_selectors = {
     dropdown_menu: 'div.qmod-dropdown',
     balance_sheet: '#innerContent > div.quote-tabs-content > div.qtool > div > div.qmod-tool-wrap > div > div.qmod-block-wrapper.qmod-financials-block > div.qmod-modifiers > div > div:nth-child(1) > div.qmod-mod-pad.qmod-pad-right > div > div > ul > li:nth-child(1) > a',
     cash_flow : '#innerContent > div.quote-tabs-content > div.qtool > div > div.qmod-tool-wrap > div > div.qmod-block-wrapper.qmod-financials-block > div.qmod-modifiers > div > div:nth-child(1) > div.qmod-mod-pad.qmod-pad-right > div > div > ul > li:nth-child(2) > a',
@@ -32,17 +32,17 @@ const getTickerInfo = async () => {
     });
 
     await page.goto(url, {
-        waitUntil: 'networkidle2'
+        waitUntil: 'networkidle2' // wait untill there are no more than 2 network connections for at least 500 ms.
     });
 
     try {
         await page.waitForFunction(() => {
             const table = document.querySelectorAll('.qmod-rowtitle');
-            if (table[0].children[2].innerText || table[0].children[3].innerText) {
+            if (table[0].children[2].innerText || table[0].children[3].innerText) { // like waitForElementsToDisplay() in LI
                 console.log('---ELEMENTS FOUND---')
                 return true;
             } else {
-                console.log('---ELEMENTS NOT FOUND---')
+                console.log('---ELEMENTS NOT FOUND AFTER 5 SECONDS---')
                 return false;
             }
         }, {
@@ -52,6 +52,7 @@ const getTickerInfo = async () => {
         console.log(err.message);
     }
 
+    // Get balance sheet data
     try {
         const bs_table_data = await page.evaluate(() => {
             const all_data = [];
@@ -88,7 +89,7 @@ const getTickerInfo = async () => {
             }
             return all_data;
         });
-        // Finsihed building balance sheet data
+        // Finished building balance sheet data
 
         // Get company name
         let company_name
@@ -99,10 +100,11 @@ const getTickerInfo = async () => {
             console.log(err.message);
         }
 
+        // Get cash flow data
         try {
             console.log('Clicking on cashflow');
-            await page.hover(report_selector.dropdown_menu);
-            await page.click(report_selector.cash_flow);
+            await page.hover(report_selectors.dropdown_menu);
+            await page.click(report_selectors.cash_flow);
         } catch(err) {
             console.log(err.message);
             await browser.close();
@@ -143,16 +145,19 @@ const getTickerInfo = async () => {
             }
             return all_data;
         });
+        // Done getting cash flow data
 
+        // Navigate to income statement
         try {
             console.log('Clicking on income state');
-            await page.hover(report_selector.dropdown_menu);
-            await page.click(report_selector.income_statement);
+            await page.hover(report_selectors.dropdown_menu);
+            await page.click(report_selectors.income_statement);
         } catch(err) {
             console.log(err.message);
             await browser.close();
         }
 
+        // Get income statement data
         const is_table_data = await page.evaluate(() => {
             const all_data = [];
             const rows = Array.from(document.querySelectorAll('.qmod-rowtitle'));
@@ -188,7 +193,9 @@ const getTickerInfo = async () => {
             }
             return all_data;
         });
+        // Done getting cash flow data
 
+        // Combine financial reports
         master_data.push({
             symbol: tickerSymbol,
             company_name,
@@ -197,6 +204,7 @@ const getTickerInfo = async () => {
             income_statement: is_table_data
         });
 
+        // Write to file
         fs.writeFileSync(`./data/${tickerSymbol}.json`, JSON.stringify(master_data));
     } catch(err) {
         console.log(err.message)

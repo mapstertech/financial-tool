@@ -14,10 +14,6 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "cheerio": "^1.0.0-rc.2",
-    "es6-promise": "^4.2.4",
-    "promise-polyfill": "^8.0.0",
-    "puppeteer": "^1.5.0",
-    "webpage": "^0.3.0"
+    "puppeteer": "^1.5.0"
   }
 }
