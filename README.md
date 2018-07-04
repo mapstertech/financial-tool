@@ -2,5 +2,9 @@
 
 ```bash
 npm install
-npm start
+
+node <filename.js> [ticker symbol]
+ex:
+node index.js RY
+# output in data/RY.json
 ```
