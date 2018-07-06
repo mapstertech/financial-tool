@@ -19,9 +19,11 @@
     <h2>Balance Sheet</h2>
     <% report.balance_sheet.forEach((yearly_report) => { %>
         <h3><%= yearly_report.year %></h3>
-        <ul>
+        <ul class="list-group">
             <% yearly_report.data.forEach((line_item) => { %>
-                <li class='indent-level-<%= line_item.indent_level %>'><%= line_item.title %> | <%= line_item.row_data %> </li>
+                <% if (line_item.row_data !== '—') { %>
+                    <li class='list-group-item indent-level-<%= line_item.indent_level %>'><%= line_item.title %> <p class="row_data"><%= line_item.row_data %></p> </li>
+                <% } %>
             <% }); %>
         </ul>
     <% }); %>
@@ -29,9 +31,11 @@
     <h2>Cash Flow Statement</h2>
     <% report.cash_flow.forEach((yearly_report) => { %>
         <h3><%= yearly_report.year %></h3>
-        <ul>
+        <ul class="list-group">
             <% yearly_report.data.forEach((line_item) => { %>
-                <li class='indent-level-<%= line_item.indent_level %>'><%= line_item.title %> | <%= line_item.row_data %> </li>
+                <% if (line_item.row_data !== '—') { %>
+                    <li class='list-group-item indent-level-<%= line_item.indent_level %>'><%= line_item.title %> <%= line_item.row_data %> </li>
+                <% } %>
             <% }); %>
         </ul>
     <% }); %>
@@ -39,9 +43,11 @@
     <h2>Income Statement</h2>
     <% report.income_statement.forEach((yearly_report) => { %>
         <h3><%= yearly_report.year %></h3>
-        <ul>
+        <ul class="list-group">
             <% yearly_report.data.forEach((line_item) => { %>
-                <li class='indent-level-<%= line_item.indent_level %>'><%= line_item.title %> | <%= line_item.row_data %> </li>
+                <% if (line_item.row_data !== '—') { %>
+                    <li class='list-group-item indent-level-<%= line_item.indent_level %>'><%= line_item.title %> <%= line_item.row_data %> </li>
+                <% } %>
             <% }); %>
         </ul>
     <% }); %>

@@ -1,3 +1,7 @@
+body {
+    margin: .5rem;
+}
+
 #top-navbar {
     position: sticky;
     top: 0;
@@ -5,22 +9,33 @@
     background-color: #ffffff;
 }
 
+.list-group-item {
+    position: relative;
+}
+
+.row_data {
+    position: absolute;
+    margin-right: 10px;
+    right: 0;
+    top: 14px;
+}
+
 .indent-level-2 {
-    margin: 0 0 0 2rem;
+    padding-left: 2rem;
 }
 
 .indent-level-3 {
-    margin: 0 0 0 4rem;
+    padding-left: 4rem;
 }
 
 .indent-level-4 {
-    margin: 0 0 0 6rem;
+    padding-left: 6rem;
 }
 
 .indent-level-5 {
-    margin: 0 0 0 8rem;
+    padding-left: 8rem;
 }
 
 .indent-level-6 {
-    margin: 0 0 0 10rem;
+    padding-left: 10rem;
 }
