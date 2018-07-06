@@ -22,7 +22,9 @@
         <ul class="list-group">
             <% yearly_report.data.forEach((line_item) => { %>
                 <% if (line_item.row_data !== '—') { %>
-                    <li class='list-group-item indent-level-<%= line_item.indent_level %>'><%= line_item.title %> <p class="row_data"><%= line_item.row_data %></p> </li>
+                    <li class='list-group-item list-group-item-action indent-level-<%= line_item.indent_level %>'>
+                        <%= line_item.title %> <p class="row_data"><%= line_item.row_data %></p>
+                    </li>
                 <% } %>
             <% }); %>
         </ul>
@@ -34,7 +36,9 @@
         <ul class="list-group">
             <% yearly_report.data.forEach((line_item) => { %>
                 <% if (line_item.row_data !== '—') { %>
-                    <li class='list-group-item indent-level-<%= line_item.indent_level %>'><%= line_item.title %> <%= line_item.row_data %> </li>
+                    <li class='list-group-item list-group-item-action indent-level-<%= line_item.indent_level %>'>
+                        <%= line_item.title %> <p class="row_data"><%= line_item.row_data %></p>
+                    </li>
                 <% } %>
             <% }); %>
         </ul>
@@ -46,7 +50,9 @@
         <ul class="list-group">
             <% yearly_report.data.forEach((line_item) => { %>
                 <% if (line_item.row_data !== '—') { %>
-                    <li class='list-group-item indent-level-<%= line_item.indent_level %>'><%= line_item.title %> <%= line_item.row_data %> </li>
+                    <li class='list-group-item list-group-item-action indent-level-<%= line_item.indent_level %>'>
+                        <%= line_item.title %> <p class="row_data"><%= line_item.row_data %></p>
+                    </li>
                 <% } %>
             <% }); %>
         </ul>
