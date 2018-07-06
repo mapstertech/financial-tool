@@ -9,14 +9,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- SS -->
     <link rel='stylesheet' href='/report.css' >
-    <title>Report: <%= report.symbol %></title>
+    <title>Report: <%= report.symbol %> <%= report.symbol %></title>
 </head>
 <body>
     <div id="top-navbar">
-        <h1><%= report.company_name %></h1>
+        <h1><%= report.company_name %> | <%= report.symbol %></h1>
     </div>
     <br>
-    <h2 class="report-title">Balance Sheet</h2>
+    <h2 class="report-title report-title-bs">Balance Sheet</h2>
     <% report.balance_sheet.forEach((yearly_report) => { %>
         <ul class="list-group">
             <li class="list-group-item active report-year"><%= yearly_report.year %></li>
@@ -30,7 +30,7 @@
         </ul>
     <% }); %>
     <br>
-    <h2 class="report-title">Cash Flow Statement</h2>
+    <h2 class="report-title report-title-cfs">Cash Flow Statement</h2>
     <% report.cash_flow.forEach((yearly_report) => { %>
         <ul class="list-group">
             <li class="list-group-item active report-year"><%= yearly_report.year %></li>
@@ -44,7 +44,7 @@
         </ul>
     <% }); %>
     <br>
-    <h2 class="report-title">Income Statement</h2>
+    <h2 class="report-title report-title-is">Income Statement</h2>
     <% report.income_statement.forEach((yearly_report) => { %>
         <ul class="list-group">
             <li class="list-group-item active report-year"><%= yearly_report.year %></li>
