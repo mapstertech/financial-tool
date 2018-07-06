@@ -1,29 +1,18 @@
 const fs = require('fs');
 const puppeteer = require('puppeteer');
 
-let tickerSymbol;
-
-if (!process.argv[2] || process.argv.length !== 3) {
-    console.log('  Pass a valid ticker symbol as a CLI argument')
-    console.log('  Usage:  node index.js [ticker_symbol]')
-    process.exit();
-} else {
-    tickerSymbol = process.argv[2].toUpperCase();
-}
-
-const master_data = [];
-const BASE_TMX_URL = 'https://web.tmxmoney.com/financials.php';
-const url = BASE_TMX_URL + '?qm_symbol=' + tickerSymbol;
-const report_selectors = {
-    dropdown_menu: 'div.qmod-dropdown',
-    balance_sheet: '#innerContent > div.quote-tabs-content > div.qtool > div > div.qmod-tool-wrap > div > div.qmod-block-wrapper.qmod-financials-block > div.qmod-modifiers > div > div:nth-child(1) > div.qmod-mod-pad.qmod-pad-right > div > div > ul > li:nth-child(1) > a',
-    cash_flow : '#innerContent > div.quote-tabs-content > div.qtool > div > div.qmod-tool-wrap > div > div.qmod-block-wrapper.qmod-financials-block > div.qmod-modifiers > div > div:nth-child(1) > div.qmod-mod-pad.qmod-pad-right > div > div > ul > li:nth-child(2) > a',
-    income_statement : '#innerContent > div.quote-tabs-content > div.qtool > div > div.qmod-tool-wrap > div > div.qmod-block-wrapper.qmod-financials-block > div.qmod-modifiers > div > div:nth-child(1) > div.qmod-mod-pad.qmod-pad-right > div > div > ul > li:nth-child(3) > a',
-}
-
 const getTickerInfo = async (tickerSymbol) => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
+
+    const BASE_TMX_URL = 'https://web.tmxmoney.com/financials.php';
+    const url = BASE_TMX_URL + '?qm_symbol=' + tickerSymbol;
+    const report_selectors = {
+        dropdown_menu: 'div.qmod-dropdown',
+        balance_sheet: '#innerContent > div.quote-tabs-content > div.qtool > div > div.qmod-tool-wrap > div > div.qmod-block-wrapper.qmod-financials-block > div.qmod-modifiers > div > div:nth-child(1) > div.qmod-mod-pad.qmod-pad-right > div > div > ul > li:nth-child(1) > a',
+        cash_flow : '#innerContent > div.quote-tabs-content > div.qtool > div > div.qmod-tool-wrap > div > div.qmod-block-wrapper.qmod-financials-block > div.qmod-modifiers > div > div:nth-child(1) > div.qmod-mod-pad.qmod-pad-right > div > div > ul > li:nth-child(2) > a',
+        income_statement : '#innerContent > div.quote-tabs-content > div.qtool > div > div.qmod-tool-wrap > div > div.qmod-block-wrapper.qmod-financials-block > div.qmod-modifiers > div > div:nth-child(1) > div.qmod-mod-pad.qmod-pad-right > div > div > ul > li:nth-child(3) > a',
+    }
 
     page.on('console', (msg) => {
         for (let i = 0; i < msg.args().length; ++i)
@@ -207,22 +196,29 @@ const getTickerInfo = async (tickerSymbol) => {
             console.log(err.message);
         }
 
+        /* From old.index.js, send single json object for reports/:tickerSymbol */
         // Combine financial reports
-        master_data.push({
+        // master_data.push({
+        //     symbol: tickerSymbol,
+        //     company_name,
+        //     balance_sheet: bs_table_data,
+        //     cash_flow: cf_table_data,
+        //     income_statement: is_table_data
+        // });
+
+        // return json data
+        return {
             symbol: tickerSymbol,
             company_name,
             balance_sheet: bs_table_data,
             cash_flow: cf_table_data,
             income_statement: is_table_data
-        });
-        // Write to file
-        fs.writeFileSync(`./data/${tickerSymbol}.json`, JSON.stringify(master_data));
-        await browser.close();
-        return master_data;
+        };
     } catch(err) {
         console.log(err.message)
     }
+
     await browser.close();
 };
 
-getTickerInfo(tickerSymbol);
+module.exports.default = getTickerInfo
