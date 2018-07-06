@@ -39,3 +39,12 @@ body {
 .indent-level-6 {
     padding-left: 10rem;
 }
+
+.report-title {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+
+.report-year {
+    margin-top: 1.5rem;
+}

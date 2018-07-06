@@ -16,10 +16,10 @@
         <h1><%= report.company_name %></h1>
     </div>
     <br>
-    <h2>Balance Sheet</h2>
+    <h2 class="report-title">Balance Sheet</h2>
     <% report.balance_sheet.forEach((yearly_report) => { %>
-        <h3><%= yearly_report.year %></h3>
         <ul class="list-group">
+            <li class="list-group-item active report-year"><%= yearly_report.year %></li>
             <% yearly_report.data.forEach((line_item) => { %>
                 <% if (line_item.row_data !== '—') { %>
                     <li class='list-group-item list-group-item-action indent-level-<%= line_item.indent_level %>'>
@@ -30,10 +30,10 @@
         </ul>
     <% }); %>
     <br>
-    <h2>Cash Flow Statement</h2>
+    <h2 class="report-title">Cash Flow Statement</h2>
     <% report.cash_flow.forEach((yearly_report) => { %>
-        <h3><%= yearly_report.year %></h3>
         <ul class="list-group">
+            <li class="list-group-item active report-year"><%= yearly_report.year %></li>
             <% yearly_report.data.forEach((line_item) => { %>
                 <% if (line_item.row_data !== '—') { %>
                     <li class='list-group-item list-group-item-action indent-level-<%= line_item.indent_level %>'>
@@ -44,10 +44,10 @@
         </ul>
     <% }); %>
     <br>
-    <h2>Income Statement</h2>
+    <h2 class="report-title">Income Statement</h2>
     <% report.income_statement.forEach((yearly_report) => { %>
-        <h3><%= yearly_report.year %></h3>
         <ul class="list-group">
+            <li class="list-group-item active report-year"><%= yearly_report.year %></li>
             <% yearly_report.data.forEach((line_item) => { %>
                 <% if (line_item.row_data !== '—') { %>
                     <li class='list-group-item list-group-item-action indent-level-<%= line_item.indent_level %>'>
