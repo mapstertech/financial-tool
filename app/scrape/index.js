@@ -14,10 +14,10 @@ const getTickerInfo = async (tickerSymbol) => {
         income_statement : '#innerContent > div.quote-tabs-content > div.qtool > div > div.qmod-tool-wrap > div > div.qmod-block-wrapper.qmod-financials-block > div.qmod-modifiers > div > div:nth-child(1) > div.qmod-mod-pad.qmod-pad-right > div > div > ul > li:nth-child(3) > a',
     }
 
-    page.on('console', (msg) => {
-        for (let i = 0; i < msg.args().length; ++i)
-            console.log(`${i}: ${msg.args()[i]}`);
-    });
+    // page.on('console', (msg) => {
+    //     for (let i = 0; i < msg.args().length; ++i)
+    //         console.log(`${i}: ${msg.args()[i]}`);
+    // });
 
     await page.goto(url, {
         waitUntil: 'networkidle2' // wait untill there are no more than 2 network connections for at least 500 ms.
@@ -208,7 +208,7 @@ const getTickerInfo = async (tickerSymbol) => {
 
         // return json data
         return {
-            symbol: tickerSymbol,
+            ticker_symbol: tickerSymbol,
             company_name,
             balance_sheet: bs_table_data,
             cash_flow: cf_table_data,

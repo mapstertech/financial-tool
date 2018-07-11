@@ -9,11 +9,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- SS -->
     <link rel='stylesheet' href='/report.css' >
-    <title>Report: <%= report.symbol %> <%= report.symbol %></title>
+    <title>Report: <%= report.ticker_symbol %> <%= report.ticker_symbol %></title>
 </head>
 <body>
     <div id="top-navbar">
-        <h1><%= report.company_name %> | <%= report.symbol %></h1>
+        <h1><%= report.company_name %> | <%= report.ticker_symbol %></h1>
         <p id="currency-info">CAD in Millions except per share data</p>
     </div>
     <br>
