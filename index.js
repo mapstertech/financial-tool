@@ -216,7 +216,9 @@ const getTickerInfo = async (tickerSymbol) => {
             income_statement: is_table_data
         });
         // Write to file
+        console.log(`Done scraping data. Writing to file: data/${tickerSymbol}.json`)
         fs.writeFileSync(`./data/${tickerSymbol}.json`, JSON.stringify(master_data));
+        console.log('Done writing to file')
         await browser.close();
         return master_data;
     } catch(err) {
